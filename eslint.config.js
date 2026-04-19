@@ -1,17 +1,18 @@
-import js from "@eslint/js";
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 export default [
-  js.configs.recommended,
   {
     ignores: ["node_modules/**", "docs/**", "dist/**"],
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: {
-        window: "readonly",
-        document: "readonly",
+      parser: tsParser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
       },
+      globals: {},
     },
     rules: {
       // keep empty for now (MVP safety checks only)

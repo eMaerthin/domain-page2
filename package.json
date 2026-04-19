@@ -20,16 +20,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/eMaerthin/domain-page2/issues"
   },
   "homepage": "https://github.com/eMaerthin/domain-page2#readme",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.1",
+    "eslint-plugin-react": "^7.37.5",
     "pre-commit": "^1.2.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
