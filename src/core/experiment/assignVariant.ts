@@ -23,11 +23,12 @@ export function resolveVariantFromUrlAndStorage() {
 
 export function computeDeterministicVariant(userId: string): ExperimentVariant {
   const totalWeight = VARIANT_WEIGHTS.reduce((s, w) => s + w.weight, 0);
+  if (totalWeight <= 0) return "hybrid";
   const r = stableHashToInt(userId + EXPERIMENT_NAME) % totalWeight;
   let acc = 0;
   for (const w of VARIANT_WEIGHTS) {
     acc += w.weight;
     if (r < acc) return w.variant;
   }
-  return VARIANT_WEIGHTS[0].variant;
+  return VARIANT_WEIGHTS.at(0)!.variant;
 }
