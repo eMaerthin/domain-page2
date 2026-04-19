@@ -1,0 +1,39 @@
+{
+  "name": "snapik.pl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eMaerthin/domain-page2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eMaerthin/domain-page2/issues"
+  },
+  "homepage": "https://github.com/eMaerthin/domain-page2#readme",
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.2.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.8"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.14.1"
+  }
+}
