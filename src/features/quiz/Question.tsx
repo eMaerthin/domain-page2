@@ -10,10 +10,12 @@ type QuestionProps = {
   image: string;
   answers: Answer[];
   progress?: number;
+  prompt?: string;
+  onSelect?: (answer: Answer) => void;
   onAnswer: (isCorrect: boolean) => void;
 };
 
-export default function Question({ image, answers, progress = 0, onAnswer }: QuestionProps) {
+export default function Question({ image, answers, progress = 0, prompt, onSelect, onAnswer }: QuestionProps) {
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export default function Question({ image, answers, progress = 0, onAnswer }: Que
   const handleClick = (a: Answer) => {
     if (selected) return;
     setSelected(a.id);
+    onSelect?.(a);
     navigator.vibrate?.(30);
     window.setTimeout(() => onAnswer(a.correct), 350);
   };
@@ -35,6 +38,7 @@ export default function Question({ image, answers, progress = 0, onAnswer }: Que
         <div className="spk-question__progress">
           <div className="spk-question__progress-bar" style={{ width: `${progress}%` }} />
         </div>
+        {prompt ? <div className="spk-question__prompt">{prompt}</div> : null}
       </div>
 
       <div className="spk-question__answers">

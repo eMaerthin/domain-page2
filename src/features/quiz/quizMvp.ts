@@ -10,7 +10,7 @@ export function startQuizEngine() {
   if (!quiz) return;
 
   const questionIndex = getNextQuestionIndex();
-  const question = quiz.questions[questionIndex];
+  const question = quiz.data.questions[questionIndex];
   if (!question) return;
 
   trackEvent("quiz_step", {
@@ -22,12 +22,12 @@ export function startQuizEngine() {
 
   mountQuizUI({
     quizId,
-    questions: quiz.questions,
+    questions: quiz.data.questions,
     questionIndex,
     onAnswer: (answerKey) => {
       const nextIndex = questionIndex + 1;
-      if (nextIndex < quiz.questions.length) {
-        const nextQ = quiz.questions[nextIndex];
+      if (nextIndex < quiz.data.questions.length) {
+        const nextQ = quiz.data.questions[nextIndex];
         if (!nextQ) return;
         trackEvent("quiz_step", {
           quizId,
@@ -37,7 +37,7 @@ export function startQuizEngine() {
         });
         mountQuizUI({
           quizId,
-          questions: quiz.questions,
+          questions: quiz.data.questions,
           questionIndex: nextIndex,
           onAnswer: (finalAnswerKey) => {
             const result = getQuizResult(quizId, [...getAnswersSoFarSafe(), finalAnswerKey]);

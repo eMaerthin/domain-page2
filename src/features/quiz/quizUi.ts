@@ -1,11 +1,13 @@
-import type { QuizQuestion } from "./quizUiTypes";
 import { useEffect } from "react";
 import { resetQuizProgress, mountAnswers } from "./quizStore";
-import { useQuizQuestion } from "./useQuizQuestion";
 
 export type QuizUiMountArgs = {
   quizId: string;
-  questions: QuizQuestion[];
+  questions: Array<{
+    id: string;
+    image: string;
+    answers: Array<{ id: string; text: string; correct: boolean }>;
+  }>;
   questionIndex: number;
   onAnswer: (answerKey: string) => void;
 };
@@ -24,15 +26,15 @@ export function InstallQuizUI() {
       // Simple non-React MVP render to keep Vite/Rolldown happy.
       const q = args.questions[args.questionIndex];
       if (!q) return;
-      const buttons = q.options
+      const buttons = q.answers
         .map(
           (opt) =>
-            `<button class="spk-btn" data-opt="${opt.key}">${opt.label}</button>`,
+            `<button class="spk-btn" data-opt="${opt.id}">${opt.text}</button>`,
         )
         .join("");
       el.innerHTML = `
         <div class="spk-card">
-          <h1 class="spk-title">${q.prompt}</h1>
+          <h1 class="spk-title"></h1>
           <div class="spk-options">${buttons}</div>
         </div>
       `;

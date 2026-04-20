@@ -2,34 +2,28 @@ import { useMemo } from "react";
 import Question from "./Question";
 import { useQuizEngine } from "./useQuizEngine";
 import { trackEvent } from "../../core/tracking/trackEvent";
-
-const STEPS = [
-  {
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1200&q=80",
-    answers: [
-      { id: "a1", text: "I want more clicks", correct: true },
-      { id: "a2", text: "I want smaller buttons", correct: false },
-    ],
-  },
-  {
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&q=80",
-    answers: [
-      { id: "b1", text: "Use tools", correct: true },
-      { id: "b2", text: "Ignore flow", correct: false },
-    ],
-  },
-] as const;
+import { getCurrentQuiz, getQuizResult } from "./quizStore";
 
 export function QuizFlow() {
-  const steps = useMemo(() => STEPS, []);
-  const { current, index, progress, answer, finished, score } = useQuizEngine(steps as any);
+  const quiz = useMemo(() => getCurrentQuiz(), []);
+  const steps = quiz?.data.questions ?? [];
+  const { current, index, progress, answer, finished, score } = useQuizEngine(steps);
 
   if (finished) {
-    trackEvent("quiz_complete", { score, total: steps.length });
+    const result = getQuizResult(quiz?.id ?? "quiz_flags_visual_1", []);
+    trackEvent("quiz_complete", {
+      score,
+      total: steps.length,
+      percent: result.percent,
+      bucket: result.bucket,
+      toolRecommendations: result.toolRecommendations,
+    });
     return (
       <div className="spk-card">
         <h1 className="spk-title">Quiz complete</h1>
         <p className="spk-muted">Score: {score}/{steps.length}</p>
+        <p className="spk-muted">Wynik: {result.percent}% ({result.bucket})</p>
+        <p className="spk-muted">Polecane narzędzia: {result.toolRecommendations.join(", ")}</p>
       </div>
     );
   }
@@ -39,10 +33,17 @@ export function QuizFlow() {
   return (
     <Question
       image={current.image}
-      answers={current.answers as any}
+      answers={current.answers}
       progress={progress}
+      onSelect={(selected) => {
+        trackEvent("quiz_step", {
+          index,
+          isCorrect: selected.correct,
+          questionId: current.id,
+          answerId: selected.id,
+        });
+      }}
       onAnswer={(isCorrect) => {
-        trackEvent("quiz_step", { index, isCorrect });
         answer(isCorrect);
       }}
     />

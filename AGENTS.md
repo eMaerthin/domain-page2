@@ -18,6 +18,8 @@ This repo implements **SNAPIK** as an experiment-driven React app served via Git
 - `src/features/ads/*` — ad placement components
 - `src/shared/components/FeedRouter.tsx` — routes by experiment variant
 - `src/layouts/*` — adaptive layouts (mobile vs desktop)
+- `backlog/` — prioritized future work and MVP scope
+- `done/` — completed work notes and implementation history
 
 ## Hard requirements (do not break)
 1. **Deterministic experiments**
@@ -95,6 +97,7 @@ Implement features so they work consistently across both **quiz** and **tools** 
 - `hybrid` is still mostly placeholder / cross-loop shell.
 - Ads are placeholders and need real impression wiring.
 - Tracking wrapper exists, but `/api/track` is still not implemented.
+- Completed work is documented under `done/*.md`; future priorities live under `backlog/*.md`.
 
 ## Execution notes
 - Ensure `npm run typecheck` and `npm run build` pass before committing.
