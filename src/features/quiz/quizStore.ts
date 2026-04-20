@@ -2,7 +2,7 @@ import type { ExperimentVariant } from "../../core/experiment/types";
 
 type QuizOption = { key: string; label: string };
 type QuizQuestion = { id: string; prompt: string; options: QuizOption[] };
-type QuizResult = { resultId: string; tags: string[] };
+type QuizResult = { resultId: string; tags: string[]; toolRecommendations: string[] };
 type QuizDefinition = {
   id: string;
   questions: QuizQuestion[];
@@ -30,10 +30,26 @@ const quiz_1: QuizDefinition = {
     },
   ],
   resultMapping: {
-    growth__fast: { resultId: "r1", tags: ["quiz", "growth", "fast"] },
-    growth__viral: { resultId: "r2", tags: ["quiz", "growth", "viral"] },
-    money__fast: { resultId: "r3", tags: ["quiz", "money", "fast"] },
-    money__viral: { resultId: "r4", tags: ["quiz", "money", "viral"] },
+    growth__fast: {
+      resultId: "r1",
+      tags: ["quiz", "growth", "fast"],
+      toolRecommendations: ["ai_generator:bioshort", "utility:nameideas"],
+    },
+    growth__viral: {
+      resultId: "r2",
+      tags: ["quiz", "growth", "viral"],
+      toolRecommendations: ["ai_generator:avatarcaption", "ai_generator:roast"],
+    },
+    money__fast: {
+      resultId: "r3",
+      tags: ["quiz", "money", "fast"],
+      toolRecommendations: ["ai_generator:promopost", "utility:headlinebank"],
+    },
+    money__viral: {
+      resultId: "r4",
+      tags: ["quiz", "money", "viral"],
+      toolRecommendations: ["ai_generator:viralhook", "ai_generator:promopost"],
+    },
   },
 };
 
@@ -76,7 +92,12 @@ export function quizAnswersToKey(answers: string[]) {
 
 export function getQuizResult(quizId: string, answers: string[]): QuizResult {
   const key = quizAnswersToKey(answers);
-  const result = quiz_1.resultMapping[key] ?? { resultId: "r_unknown", tags: ["quiz", "unknown"] };
+  const result =
+    quiz_1.resultMapping[key] ?? {
+      resultId: "r_unknown",
+      tags: ["quiz", "unknown"],
+      toolRecommendations: ["ai_generator:promopost"],
+    };
   return result;
 }
 

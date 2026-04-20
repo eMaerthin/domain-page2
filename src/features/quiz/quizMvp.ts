@@ -45,6 +45,7 @@ export function startQuizEngine() {
               quizId,
               resultId: result.resultId,
               resultTags: result.tags,
+              toolRecommendations: result.toolRecommendations,
             });
           },
         });
@@ -54,6 +55,7 @@ export function startQuizEngine() {
           quizId,
           resultId: result.resultId,
           resultTags: result.tags,
+          toolRecommendations: result.toolRecommendations,
         });
       }
     },
