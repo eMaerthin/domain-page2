@@ -20,6 +20,7 @@ This repo implements **SNAPIK** as an experiment-driven React app served via Git
 - `src/layouts/*` — adaptive layouts (mobile vs desktop)
 - `backlog/` — prioritized future work and MVP scope
 - `done/` — completed work notes and implementation history
+- `public/assets/flags/` — local flag SVG assets for quiz questions
 
 ## Hard requirements (do not break)
 1. **Deterministic experiments**
@@ -98,6 +99,7 @@ Implement features so they work consistently across both **quiz** and **tools** 
 - Ads are placeholders and need real impression wiring.
 - Tracking wrapper exists, but `/api/track` is still not implemented.
 - Completed work is documented under `done/*.md`; future priorities live under `backlog/*.md`.
+- Quiz flag art should be local SVGs under `public/assets/flags/`, sourced from Wikimedia Commons-style country flags (or equivalent license-safe source).
 
 ## Execution notes
 - Ensure `npm run typecheck` and `npm run build` pass before committing.

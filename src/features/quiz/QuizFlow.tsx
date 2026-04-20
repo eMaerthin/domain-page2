@@ -7,10 +7,16 @@ import { getCurrentQuiz, getQuizResult } from "./quizStore";
 export function QuizFlow() {
   const quiz = useMemo(() => getCurrentQuiz(), []);
   const steps = quiz?.data.questions ?? [];
-  const { current, index, progress, answer, finished, score } = useQuizEngine(steps);
+  const { current, index, progress, answer, finished, score, answers } = useQuizEngine(steps);
 
   if (finished) {
-    const result = getQuizResult(quiz?.id ?? "quiz_flags_visual_1", []);
+    const result = getQuizResult(
+      quiz?.id ?? "quiz_flags_visual_1",
+      answers.map((correct, idx) => {
+        if (correct) return steps[idx]?.answers.find((a) => a.correct)?.id ?? "";
+        return steps[idx]?.answers.find((a) => !a.correct)?.id ?? "";
+      }),
+    );
     trackEvent("quiz_complete", {
       score,
       total: steps.length,

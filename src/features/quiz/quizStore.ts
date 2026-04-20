@@ -38,7 +38,7 @@ const quiz_1: Quiz = {
     questions: [
       {
         id: "q1",
-        image: "/assets/flags/france.png",
+        image: "/assets/flags/france.svg",
         answers: [
           { id: "a", text: "Francja", correct: true },
           { id: "b", text: "Włochy", correct: false },
@@ -47,7 +47,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q2",
-        image: "/assets/flags/japan.png",
+        image: "/assets/flags/japan.svg",
         answers: [
           { id: "a", text: "Chiny", correct: false },
           { id: "b", text: "Japonia", correct: true },
@@ -56,7 +56,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q3",
-        image: "/assets/flags/germany.png",
+        image: "/assets/flags/germany.svg",
         answers: [
           { id: "a", text: "Belgia", correct: false },
           { id: "b", text: "Niemcy", correct: true },
@@ -65,7 +65,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q4",
-        image: "/assets/flags/italy.png",
+        image: "/assets/flags/italy.svg",
         answers: [
           { id: "a", text: "Włochy", correct: true },
           { id: "b", text: "Francja", correct: false },
@@ -74,7 +74,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q5",
-        image: "/assets/flags/brazil.png",
+        image: "/assets/flags/brazil.svg",
         answers: [
           { id: "a", text: "Argentyna", correct: false },
           { id: "b", text: "Brazylia", correct: true },
@@ -83,7 +83,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q6",
-        image: "/assets/flags/canada.png",
+        image: "/assets/flags/canada.svg",
         answers: [
           { id: "a", text: "Kanada", correct: true },
           { id: "b", text: "USA", correct: false },
@@ -92,7 +92,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q7",
-        image: "/assets/flags/sweden.png",
+        image: "/assets/flags/sweden.svg",
         answers: [
           { id: "a", text: "Norwegia", correct: false },
           { id: "b", text: "Szwecja", correct: true },
@@ -101,7 +101,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q8",
-        image: "/assets/flags/uk.png",
+        image: "/assets/flags/uk.svg",
         answers: [
           { id: "a", text: "Wielka Brytania", correct: true },
           { id: "b", text: "Irlandia", correct: false },
@@ -110,7 +110,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q9",
-        image: "/assets/flags/spain.png",
+        image: "/assets/flags/spain.svg",
         answers: [
           { id: "a", text: "Hiszpania", correct: true },
           { id: "b", text: "Portugalia", correct: false },
@@ -119,7 +119,7 @@ const quiz_1: Quiz = {
       },
       {
         id: "q10",
-        image: "/assets/flags/usa.png",
+        image: "/assets/flags/usa.svg",
         answers: [
           { id: "a", text: "USA", correct: true },
           { id: "b", text: "Kanada", correct: false },
