@@ -2,6 +2,12 @@
 
 This repo implements **SNAPIK** as an experiment-driven React app served via GitHub Pages (`docs/` output).
 
+## Product intent
+- Optimize for **PV/user**, retention, and monetization loops.
+- Prioritize **content/product loops** over UI polish.
+- The app must support **A/B product variants** (`quiz`, `tools`, `hybrid`) with sticky assignment.
+- The codebase must remain deployable from `docs/` and safe for GitHub Pages.
+
 ## Repo structure (relevant)
 - `src/core/experiment/*` — deterministic A/B variant assignment (`quiz | tools | hybrid`)
 - `src/core/device/*` — device detection (mobile vs desktop)
@@ -17,6 +23,7 @@ This repo implements **SNAPIK** as an experiment-driven React app served via Git
 1. **Deterministic experiments**
    - `?variant=quiz|tools|hybrid` overrides randomness.
    - Assignment must be **sticky** in `localStorage`/cookie.
+   - Variant assignment is by `hash(user_id + experiment_name) % weights`.
 2. **One feed per variant**
    - `quiz` → quiz flow
    - `tools` → tools flow
@@ -31,6 +38,21 @@ This repo implements **SNAPIK** as an experiment-driven React app served via Git
    - Mobile: sticky bottom ads
    - Desktop: sidebar ads
    - Ad slots must emit `ad_impression`.
+
+## Runtime / deployment decisions
+- Frontend scaffold: **Vite + React + TypeScript**.
+- Production output: `docs/`.
+- Custom domain: `snapik.pl` via `docs/CNAME`.
+- Analytics: Google Analytics gtag is already embedded in the site shell.
+- CI must run:
+  - `npm ci`
+  - `npm run typecheck`
+  - `npm run lint`
+  - `npm run build`
+- Local pre-commit (Husky) must run at least:
+  - `npm run typecheck`
+  - `npm run build`
+- The repo should avoid pushing commits unless the local validation commands above pass.
 
 ## “Both pages” feature checklist (Quiz + Tools, plus Hybrid)
 Implement features so they work consistently across both **quiz** and **tools** pages, and then compose them in **hybrid**:
@@ -66,6 +88,20 @@ Implement features so they work consistently across both **quiz** and **tools** 
 - Tracking consistency:
   - Use the same events as quiz/tools (`page_view` with distinct `page` values, plus `quiz_*` and `tool_used`)
 
+## Current implemented state (for external audit)
+- Experiment assignment hook exists and is sticky.
+- `quiz` has an MVP loop and now produces **tool recommendations** from quiz outcomes.
+- `tools` is still mostly placeholder.
+- `hybrid` is still mostly placeholder / cross-loop shell.
+- Ads are placeholders and need real impression wiring.
+- Tracking wrapper exists, but `/api/track` is still not implemented.
+
 ## Execution notes
 - Ensure `npm run typecheck` and `npm run build` pass before committing.
 - Keep deployments stable: changes must update `docs/` by running `npm run build` and committing the output.
+- When proposing backlog items, prefer **ordered, dependency-aware items** that unblock revenue/retention first:
+  1. hybrid cross-loop
+  2. tools MVP
+  3. real tracking backend
+  4. ad impression wiring
+  5. persistence/SEO/perf hardening
