@@ -122,6 +122,29 @@ body {
   background: #fff;
 }
 
+.spk-question__prompt {
+  position: absolute;
+  left: 12px;
+  right: 72px;
+  bottom: 12px;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.spk-question__timer {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  min-width: 36px;
+  text-align: center;
+}
+
 .spk-question__answers {
   padding: 12px 12px 20px;
   background: #000;
@@ -150,4 +173,221 @@ body {
 .spk-question__answer--wrong {
   background: #ef4444;
   color: #fff;
+}
+
+.spk-picker {
+  min-height: 100vh;
+  padding: 20px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 40%), #0f172a;
+}
+
+.spk-picker__hero {
+  padding: 16px 8px 6px;
+}
+
+.spk-picker__eyebrow {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.spk-picker__title {
+  margin: 12px 0 8px;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  line-height: 0.98;
+}
+
+.spk-picker__subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 28rem;
+}
+
+.spk-picker__cards,
+.spk-reco-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.spk-picker__card {
+  width: 100%;
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  background: linear-gradient(180deg, rgba(17, 28, 52, 0.98), rgba(12, 18, 36, 0.98));
+  color: #fff;
+  border-radius: 22px;
+  padding: 18px;
+  text-align: left;
+  display: grid;
+  gap: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.spk-picker__card strong {
+  font-size: 1.15rem;
+}
+
+.spk-picker__card span {
+  color: var(--muted);
+}
+
+.spk-picker__card--compact {
+  min-height: 112px;
+}
+
+.spk-picker__cta {
+  border: 0;
+  border-radius: 16px;
+  background: #38bdf8;
+  color: #04111d;
+  padding: 14px 16px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.spk-result-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 12px 0 16px;
+}
+
+.spk-tool {
+  display: grid;
+  gap: 14px;
+}
+
+.spk-tool__hero {
+  display: grid;
+  gap: 8px;
+}
+
+.spk-tool__panel,
+.spk-tool__result {
+  display: grid;
+  gap: 12px;
+}
+
+.spk-tool__label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.spk-tool__input {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(125, 211, 252, 0.25);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text);
+  padding: 0 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.spk-tool__input::placeholder {
+  color: #7c8fb2;
+}
+
+.spk-tool__cta {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+  color: #04111d;
+  padding: 14px 16px;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.spk-tool__error {
+  margin: 0;
+  color: #fda4af;
+  font-size: 0.92rem;
+}
+
+.spk-tool__grid {
+  display: grid;
+  gap: 10px;
+}
+
+.spk-tool__styled-list {
+  display: grid;
+  gap: 12px;
+}
+
+.spk-tool__styled-item {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--text);
+  text-align: left;
+}
+
+.spk-tool__mini {
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 18px;
+  background: rgba(17, 28, 52, 0.88);
+  color: var(--text);
+  text-align: left;
+  padding: 14px 16px;
+  display: grid;
+  gap: 4px;
+}
+
+.spk-tool__mini span {
+  color: var(--muted);
+}
+
+.spk-tool__mini--active {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.14) inset;
+}
+
+.spk-tool__category {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #dbeafe;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  text-transform: capitalize;
+}
+
+
+.spk-review {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.spk-review__image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.spk-review__actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
 }

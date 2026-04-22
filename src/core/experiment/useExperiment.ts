@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { computeDeterministicVariant, resolveVariantFromUrlAndStorage } from "./assignVariant";
 import { EXPERIMENT_NAME, type ExperimentVariant } from "./types";
 import { getUserId } from "../user/getUserId";
+import { getCookie, setCookie } from "../storage/cookies";
 
 export function useExperiment(name: string): ExperimentVariant {
   if (name !== EXPERIMENT_NAME) {
@@ -9,19 +10,24 @@ export function useExperiment(name: string): ExperimentVariant {
     name;
   }
   const [variant, setVariant] = useState<ExperimentVariant>("hybrid");
-  const resolved = useMemo(() => {
-    if (typeof window === "undefined") return undefined;
-    return resolveVariantFromUrlAndStorage();
-  }, []);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
     const key = `spk_variant:${EXPERIMENT_NAME}`;
+    const cookieVariant = getCookie(`variant:${EXPERIMENT_NAME}`);
+    const resolved = resolveVariantFromUrlAndStorage();
     if (resolved) {
       try {
         localStorage.setItem(key, resolved);
       } catch {}
+      setCookie(`variant:${EXPERIMENT_NAME}`, resolved);
       setVariant(resolved);
+      return;
+    }
+    if (cookieVariant === "quiz" || cookieVariant === "tools" || cookieVariant === "hybrid") {
+      setVariant(cookieVariant);
+      try {
+        localStorage.setItem(key, cookieVariant);
+      } catch {}
       return;
     }
     const userId = getUserId();
@@ -29,8 +35,9 @@ export function useExperiment(name: string): ExperimentVariant {
     try {
       localStorage.setItem(key, v);
     } catch {}
+    setCookie(`variant:${EXPERIMENT_NAME}`, v);
     setVariant(v);
-  }, [resolved]);
+  }, []);
 
   return variant;
 }

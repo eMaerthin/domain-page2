@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{ts,tsx,js,jsx}\"",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "download:commons": "node scripts/download_commons_assets.ts \"a group of friends\" public/assets/personality/friends.jpg public/assets/personality/manifest.json"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "vite": "^8.0.8"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "react-router-dom": "^7.14.1"
   }
 }

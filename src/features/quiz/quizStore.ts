@@ -1,26 +1,48 @@
-export type Answer = {
+import { quizSeed } from "../../data/quizSeed";
+import { fetchQuizzes, postQuizSeedOnRestart } from "../../core/mongo/localMongoClient";
+
+export type QuizType = "knowledge" | "personality";
+
+export type KnowledgeAnswer = {
   id: string;
   text: string;
   correct: boolean;
 };
 
-export type Question = {
+export type PersonalityAnswer = {
+  id: string;
+  text: string;
+  traits: string[];
+};
+
+export type Result = {
+  id: string;
+  title: string;
+  description: string;
+  image?: string;
+  matchTraits: string[];
+};
+
+export type QuizQuestion<TAnswer> = {
   id: string;
   image: string;
   prompt?: string;
-  answers: Answer[];
+  answers: TAnswer[];
 };
 
-export type Quiz = {
+export type Quiz<TAnswer = KnowledgeAnswer | PersonalityAnswer> = {
   id: string;
+  type: QuizType;
   title: string;
   tags: string[];
   data: {
-    questions: Question[];
+    questions: QuizQuestion<TAnswer>[];
+    results?: Result[];
   };
 };
 
-export type QuizResult = {
+export type KnowledgeQuizResult = {
+  mode: "knowledge";
   resultId: string;
   score: number;
   total: number;
@@ -30,184 +52,186 @@ export type QuizResult = {
   toolRecommendations: string[];
 };
 
-const quiz_1: Quiz = {
-  id: "quiz_flags_visual_1",
-  title: "Czy rozpoznasz flagi świata?",
-  tags: ["geografia", "flagi"],
-  data: {
-    questions: [
-      {
-        id: "q1",
-        image: "/assets/flags/france.svg",
-        answers: [
-          { id: "a", text: "Francja", correct: true },
-          { id: "b", text: "Włochy", correct: false },
-          { id: "c", text: "Holandia", correct: false },
-        ],
-      },
-      {
-        id: "q2",
-        image: "/assets/flags/japan.svg",
-        answers: [
-          { id: "a", text: "Chiny", correct: false },
-          { id: "b", text: "Japonia", correct: true },
-          { id: "c", text: "Korea", correct: false },
-        ],
-      },
-      {
-        id: "q3",
-        image: "/assets/flags/germany.svg",
-        answers: [
-          { id: "a", text: "Belgia", correct: false },
-          { id: "b", text: "Niemcy", correct: true },
-          { id: "c", text: "Austria", correct: false },
-        ],
-      },
-      {
-        id: "q4",
-        image: "/assets/flags/italy.svg",
-        answers: [
-          { id: "a", text: "Włochy", correct: true },
-          { id: "b", text: "Francja", correct: false },
-          { id: "c", text: "Hiszpania", correct: false },
-        ],
-      },
-      {
-        id: "q5",
-        image: "/assets/flags/brazil.svg",
-        answers: [
-          { id: "a", text: "Argentyna", correct: false },
-          { id: "b", text: "Brazylia", correct: true },
-          { id: "c", text: "Kolumbia", correct: false },
-        ],
-      },
-      {
-        id: "q6",
-        image: "/assets/flags/canada.svg",
-        answers: [
-          { id: "a", text: "Kanada", correct: true },
-          { id: "b", text: "USA", correct: false },
-          { id: "c", text: "Austria", correct: false },
-        ],
-      },
-      {
-        id: "q7",
-        image: "/assets/flags/sweden.svg",
-        answers: [
-          { id: "a", text: "Norwegia", correct: false },
-          { id: "b", text: "Szwecja", correct: true },
-          { id: "c", text: "Finlandia", correct: false },
-        ],
-      },
-      {
-        id: "q8",
-        image: "/assets/flags/uk.svg",
-        answers: [
-          { id: "a", text: "Wielka Brytania", correct: true },
-          { id: "b", text: "Irlandia", correct: false },
-          { id: "c", text: "Australia", correct: false },
-        ],
-      },
-      {
-        id: "q9",
-        image: "/assets/flags/spain.svg",
-        answers: [
-          { id: "a", text: "Hiszpania", correct: true },
-          { id: "b", text: "Portugalia", correct: false },
-          { id: "c", text: "Meksyk", correct: false },
-        ],
-      },
-      {
-        id: "q10",
-        image: "/assets/flags/usa.svg",
-        answers: [
-          { id: "a", text: "USA", correct: true },
-          { id: "b", text: "Kanada", correct: false },
-          { id: "c", text: "Wielka Brytania", correct: false },
-        ],
-      },
-    ],
-  },
+export type PersonalityQuizResult = {
+  mode: "personality";
+  resultId: string;
+  title: string;
+  description: string;
+  image?: string;
+  score: number;
+  total: number;
+  percent: number;
+  bucket: "match" | "fallback";
+  tags: string[];
+  toolRecommendations: string[];
 };
 
+export type QuizResult = KnowledgeQuizResult | PersonalityQuizResult;
+
+const quizzes: Quiz<any>[] = [...quizSeed];
+
 export function getQuizDefinition(quizId: string): Quiz | undefined {
-  if (quizId === quiz_1.id) return quiz_1;
-  return undefined;
+  return quizzes.find((quiz) => quiz.id === quizId);
+}
+
+export async function hydrateQuizzesFromMongo() {
+  const remoteQuizzes = await fetchQuizzes();
+  const nextQuizzes = remoteQuizzes.length ? remoteQuizzes : quizSeed;
+  quizzes.splice(0, quizzes.length, ...nextQuizzes);
+}
+
+export async function seedQuizzesOnRestart() {
+  await postQuizSeedOnRestart();
+}
+
+export function getCurrentQuiz() {
+  return quizSeed[0];
 }
 
 const STORE_KEY = "spk_quiz_answers";
 
-function readAnswers(): string[] {
+function readAllAnswers(): Record<string, string[]> {
   try {
     const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return [];
+    if (!raw) return {};
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as string[]) : [];
+    return parsed && typeof parsed === "object" ? (parsed as Record<string, string[]>) : {};
   } catch {
-    return [];
+    return {};
   }
 }
 
-function writeAnswers(next: string[]) {
+function readAnswers(quizId: string): string[] {
+  return readAllAnswers()[quizId] ?? [];
+}
+
+function writeAnswers(quizId: string, next: string[]) {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(next));
+    const all = readAllAnswers();
+    all[quizId] = next;
+    localStorage.setItem(STORE_KEY, JSON.stringify(all));
   } catch {}
 }
 
-export function resetQuizProgress() {
-  writeAnswers([]);
+export function resetQuizProgress(quizId = quizSeed[0]?.id) {
+  if (!quizId) return;
+  writeAnswers(quizId, []);
 }
 
-export function getNextQuestionIndex() {
-  const answers = readAnswers();
-  return Math.min(answers.length, quiz_1.data.questions.length);
+export function getNextQuestionIndex(quizId = quizSeed[0]?.id) {
+  if (!quizId) return 0;
+  const answers = readAnswers(quizId);
+  const quiz = getQuizDefinition(quizId);
+  return Math.min(answers.length, quiz?.data.questions.length ?? 0);
 }
 
-export function mountAnswers(answerKey: string, questionIndex: number) {
-  const answers = readAnswers();
+export function mountAnswers(answerKey: string, questionIndex: number, quizId = quizSeed[0]?.id) {
+  if (!quizId) return;
+  const answers = readAnswers(quizId);
   const next = [...answers];
   next[questionIndex] = answerKey;
-  writeAnswers(next);
+  writeAnswers(quizId, next);
 }
 
-export function getAnswersSoFar(): string[] {
-  return readAnswers();
+export function getAnswersSoFar(quizId = quizSeed[0]?.id): string[] {
+  if (!quizId) return [];
+  return readAnswers(quizId);
 }
 
-export function getAnswersSoFarSafe() {
-  return getAnswersSoFar();
+export function getAnswersSoFarSafe(quizId = quizSeed[0]?.id) {
+  return getAnswersSoFar(quizId);
+}
+
+
+export function getKnowledgeReview(quizId: string, answers: string[]) {
+  const quiz = getQuizDefinition(quizId);
+  if (!quiz || quiz.type !== "knowledge") return [];
+  return quiz.data.questions.map((question, index) => {
+    const userAnswerId = answers[index] ?? "";
+    const userAnswer = question.answers.find((answer) => answer.id === userAnswerId);
+    const correctAnswer = question.answers.find((answer) => "correct" in answer && answer.correct);
+    return {
+      questionId: question.id,
+      image: question.image,
+      prompt: question.prompt ?? quiz.title,
+      userAnswer: userAnswer?.text ?? "Brak odpowiedzi",
+      correctAnswer: correctAnswer?.text ?? "Brak poprawnej odpowiedzi",
+      isCorrect: Boolean(userAnswerId && correctAnswer && userAnswerId === correctAnswer.id),
+      encouragement: userAnswerId && correctAnswer && userAnswerId === correctAnswer.id ? "Dobrze!" : "Spróbuj ponownie następnym razem.",
+    };
+  });
 }
 
 export function getQuizResult(quizId: string, answers: string[]): QuizResult {
   const quiz = getQuizDefinition(quizId);
-  const total = quiz?.data.questions.length ?? 0;
-  const score = quiz?.data.questions.reduce((acc, q, idx) => acc + (answers[idx] === q.answers.find((a) => a.correct)?.id ? 1 : 0), 0) ?? 0;
-  const percent = total ? Math.round((score / total) * 100) : 0;
-  const bucket: QuizResult["bucket"] = percent >= 70 ? "expert" : percent >= 40 ? "ok" : "weak";
+  if (!quiz) {
+    return {
+      mode: "knowledge",
+      resultId: `${quizId}:unknown`,
+      score: 0,
+      total: 0,
+      percent: 0,
+      bucket: "weak",
+      tags: ["quiz"],
+      toolRecommendations: ["utility:headlinebank"],
+    };
+  }
 
-  const toolRecommendations =
-    bucket === "expert"
-      ? ["ai_generator:viralhook", "ai_generator:promopost"]
-      : bucket === "ok"
-        ? ["ai_generator:bioshort", "utility:nameideas"]
-        : ["utility:headlinebank", "ai_generator:promopost"];
+  if (quiz.type === "knowledge") {
+    const total = quiz.data.questions.length;
+    const score = quiz.data.questions.reduce((acc, q, idx) => {
+      const correctId = q.answers.find((a) => "correct" in a && a.correct)?.id;
+      return acc + (answers[idx] === correctId ? 1 : 0);
+    }, 0);
+    const percent = total ? Math.round((score / total) * 100) : 0;
+    const bucket: KnowledgeQuizResult["bucket"] = percent >= 70 ? "expert" : percent >= 40 ? "ok" : "weak";
+    const toolRecommendations =
+      bucket === "expert"
+        ? ["tools"]
+        : bucket === "ok"
+          ? ["tools"]
+          : ["tools"];
+    return {
+      mode: "knowledge",
+      resultId: `${quiz.id}:${bucket}`,
+      score,
+      total,
+      percent,
+      bucket,
+      tags: quiz.tags,
+      toolRecommendations,
+    };
+  }
+
+  const resultTraits = quiz.data.questions.reduce<Record<string, number>>((acc, q, idx) => {
+    const selected = q.answers.find((a) => a.id === answers[idx]) as PersonalityAnswer | undefined;
+    for (const trait of selected?.traits ?? []) acc[trait] = (acc[trait] ?? 0) + 1;
+    return acc;
+  }, {});
+  const results = quiz.data.results ?? [];
+  const ranked = results
+    .map((result) => ({
+      result,
+      score: result.matchTraits.reduce((sum, trait) => sum + (resultTraits[trait] ?? 0), 0),
+    }))
+    .sort((a, b) => b.score - a.score);
+  const winner = ranked[0]?.result ?? results[0];
+  const total = quiz.data.questions.length;
+  const score = ranked[0]?.score ?? 0;
+  const percent = total ? Math.round((score / total) * 100) : 0;
+  const bucket: PersonalityQuizResult["bucket"] = winner ? "match" : "fallback";
 
   return {
-    resultId: `${quiz?.id ?? quizId}:${bucket}`,
+    mode: "personality",
+    resultId: winner?.id ?? `${quiz.id}:fallback`,
+    title: winner?.title ?? quiz.title,
+    description: winner?.description ?? "",
+    ...(winner?.image ? { image: winner.image } : {}),
     score,
     total,
     percent,
     bucket,
-    tags: quiz?.tags ?? ["quiz"],
-    toolRecommendations,
+    tags: quiz.tags,
+    toolRecommendations: ["tools"],
   };
-}
-
-export function getCurrentQuiz() {
-  return quiz_1;
-}
-
-export function getCorrectAnswerId(questionId: string) {
-  const question = quiz_1.data.questions.find((q) => q.id === questionId);
-  return question?.answers.find((a) => a.correct)?.id;
 }

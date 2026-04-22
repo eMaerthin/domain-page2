@@ -86,6 +86,9 @@ Scope: deterministic experiments + quiz/tools MVP + tracking + ads placements + 
      - deterministic mapping from result/tool category → recommended content ids
    - Acceptance:
      - User sees at least 2 recommended items after completing quiz/tool.
+   - Current issue to fix:
+     - existing quiz recommendations like `ai_generator:bioshort` / `utility:nameideas` are too generic and not useful enough for users.
+     - backlog must replace these with more specific, outcome-driven recommendations (e.g. directly actionable tools/templates tied to quiz result).
 
 ## P2 — Content + feed system (scaling)
 
@@ -98,14 +101,38 @@ Scope: deterministic experiments + quiz/tools MVP + tracking + ads placements + 
    - Acceptance:
      - Feed renders from the JSON store; no hardcoded UI lists.
 
-9. **Tool/quiz result personalization (lightweight)**
+9. **Local MongoDB quiz seed builder**
+   - Set up a local MongoDB instance and a builder/seed script.
+   - Seed with example hardcoded quizzes:
+     - 5 knowledge quizzes
+     - 5 personality quizzes
+   - Acceptance:
+     - A single local command populates the DB with deterministic sample content.
+     - Content is queryable by the frontend/backend contract.
+
+10. **AI quiz generator pipeline (knowledge + personality)**
+   - Build a generation pipeline based on topic + traits:
+     - prompt template
+     - LLM call
+     - validation
+     - normalization to app quiz model
+     - batch generation
+   - Requirements:
+     - support both knowledge and personality quiz creation
+     - avoid generic prompts/answers
+     - keep generated output deterministic enough for validation
+   - Acceptance:
+     - a local command/script can generate new quiz JSON drafts from topic/trait input
+     - invalid AI output is rejected and retried
+
+11. **Tool/quiz result personalization (lightweight)**
    - Rule-based using quiz answers or tool input tags.
    - Acceptance:
      - Different answers produce different recommendation sets.
 
 ## P3 — Production hardening
 
-10. **Backend/API (or mocked gateway)**
+12. **Backend/API (or mocked gateway)**
    - Provide endpoints used by the frontend:
      - `GET /quiz/:id`
      - `GET /quiz/:id/question/:index`
@@ -115,12 +142,12 @@ Scope: deterministic experiments + quiz/tools MVP + tracking + ads placements + 
    - Acceptance:
      - Frontend can run fully against local backend (or mocks with same contract).
 
-11. **Ad integration wiring**
+13. **Ad integration wiring**
    - Replace placeholders with real AdSense/partner ad loaders.
    - Acceptance:
      - Ad impressions trigger tracking integration.
 
-12. **Performance + SEO basics**
+14. **Performance + SEO basics**
    - Ensure fast mobile load:
      - code splitting (as needed)
      - remove unused assets

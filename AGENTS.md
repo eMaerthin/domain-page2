@@ -100,6 +100,9 @@ Implement features so they work consistently across both **quiz** and **tools** 
 - Tracking wrapper exists, but `/api/track` is still not implemented.
 - Completed work is documented under `done/*.md`; future priorities live under `backlog/*.md`.
 - Quiz flag art should be local SVGs under `public/assets/flags/`, sourced from Wikimedia Commons-style country flags (or equivalent license-safe source).
+- Current quiz recommendations are too generic (`ai_generator:bioshort`, `utility:nameideas`) and should be treated as a backlog issue; future outputs must be more actionable and outcome-specific.
+- New backlog item: local MongoDB + builder/seed script for 5 knowledge and 5 personality quizzes before scaling content APIs.
+- New backlog item: AI quiz generator pipeline (prompt + LLM + validation + normalization + batch generation) for both knowledge and personality quizzes.
 
 ## Execution notes
 - Ensure `npm run typecheck` and `npm run build` pass before committing.
@@ -110,3 +113,16 @@ Implement features so they work consistently across both **quiz** and **tools** 
   3. real tracking backend
   4. ad impression wiring
   5. persistence/SEO/perf hardening
+
+## Editing / patching howto
+- Before editing any file, read the **latest version** first if the tool warns about external modifications.
+- Prefer **single-file, focused edits**; do not bundle unrelated changes into one patch.
+- If `ApplyPatch` fails, treat it as a signal to **re-read the target file** and patch against the latest contents rather than retrying the same hunk.
+- Keep patches exact:
+  - avoid rewriting large blocks unless required
+  - preserve existing formatting and imports
+  - use explicit, stable line contexts
+- After any code edit, run the relevant validator(s) immediately:
+  - `npm run typecheck`
+  - `npm run build`
+- If a patch is touching a file that was modified externally, stop and re-read before editing again.

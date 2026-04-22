@@ -1,22 +1,16 @@
 import { useMemo, useState } from "react";
 
-export type QuizAnswer = {
-  id: string;
-  text: string;
-  correct: boolean;
-};
-
-export type QuizStep = {
+export type QuizStep<TAnswer> = {
   id: string;
   image: string;
   prompt?: string;
-  answers: QuizAnswer[];
+  answers: TAnswer[];
 };
 
-export function useQuizEngine(steps: QuizStep[]) {
+export function useQuizEngine<TAnswer>(steps: QuizStep<TAnswer>[]) {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [answers, setAnswers] = useState<boolean[]>([]);
+  const [answers, setAnswers] = useState<Array<{ answerId: string; correct: boolean }>>([]);
 
   const current = steps[index];
 
@@ -25,13 +19,18 @@ export function useQuizEngine(steps: QuizStep[]) {
     return Math.round((index / steps.length) * 100);
   }, [index, steps.length]);
 
-  const answer = (isCorrect: boolean) => {
-    setScore((s) => s + (isCorrect ? 1 : 0));
-    setAnswers((prev) => [...prev, isCorrect]);
+  const answer = (answerId: string, correct: boolean) => {
+    setScore((s) => s + (correct ? 1 : 0));
+    setAnswers((prev) => [...prev, { answerId, correct }]);
+    setIndex((i) => Math.min(i + 1, steps.length));
+  };
+
+  const skip = () => {
+    setAnswers((prev) => [...prev, { answerId: "timeout", correct: false }]);
     setIndex((i) => Math.min(i + 1, steps.length));
   };
 
   const finished = index >= steps.length;
 
-  return { current, index, score, progress, answer, finished, answers };
+  return { current, index, score, progress, answer, skip, finished, answers };
 }

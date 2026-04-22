@@ -10,6 +10,7 @@ type TrackingEnvelope = {
 
 const QUEUE_KEY = "spk_track_queue";
 const MAX_QUEUE = 50;
+const TRACK_ENDPOINT = new URL("/api/track", window.location.origin).toString();
 
 function readQueue(): TrackingEnvelope[] {
   try {
@@ -41,12 +42,19 @@ export async function flushTrackingQueue() {
   const remaining: TrackingEnvelope[] = [];
   for (const item of queue) {
     try {
-      const res = await fetch("/api/track", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(item),
-      });
-      if (!res.ok) remaining.push(item);
+      const payload = JSON.stringify(item);
+      const sent =
+        typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function"
+          ? navigator.sendBeacon(TRACK_ENDPOINT, new Blob([payload], { type: "application/json" }))
+          : false;
+      if (!sent) {
+        const res = await fetch(TRACK_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+        });
+        if (!res.ok) remaining.push(item);
+      }
     } catch {
       remaining.push(item);
     }

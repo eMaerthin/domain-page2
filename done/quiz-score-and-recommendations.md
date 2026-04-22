@@ -11,3 +11,4 @@
 
 ## Notes
 - This made the quiz outcome more useful and connected it to the tools loop.
+- However, current recommendation labels may still be too generic for users and should be replaced with more actionable outputs in the backlog.

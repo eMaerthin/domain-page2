@@ -1,15 +1,13 @@
 import { trackEvent } from "../../core/tracking/trackEvent";
-import { getQuizDefinition, getNextQuestionIndex, getQuizResult } from "./quizStore";
+import { getQuizDefinition, getNextQuestionIndex, getQuizResult, getAnswersSoFarSafe } from "./quizStore";
 import { mountQuizUI } from "./quizUi";
-import { getAnswersSoFarSafe } from "./quizStore";
 
 export function startQuizEngine() {
-  // MVP: initialize a small hardcoded quiz from the store and mount a minimal UI.
-  const quizId = "quiz_1";
+  const quizId = "quiz_flags_visual_1";
   const quiz = getQuizDefinition(quizId);
-  if (!quiz) return;
+  if (!quiz || quiz.type !== "knowledge") return;
 
-  const questionIndex = getNextQuestionIndex();
+  const questionIndex = getNextQuestionIndex(quizId);
   const question = quiz.data.questions[questionIndex];
   if (!question) return;
 
@@ -22,7 +20,7 @@ export function startQuizEngine() {
 
   mountQuizUI({
     quizId,
-    questions: quiz.data.questions,
+    questions: quiz.data.questions as Array<{ id: string; image: string; answers: Array<{ id: string; text: string; correct: boolean }> }>,
     questionIndex,
     onAnswer: (answerKey) => {
       const nextIndex = questionIndex + 1;
@@ -37,10 +35,10 @@ export function startQuizEngine() {
         });
         mountQuizUI({
           quizId,
-          questions: quiz.data.questions,
+          questions: quiz.data.questions as Array<{ id: string; image: string; answers: Array<{ id: string; text: string; correct: boolean }> }>,
           questionIndex: nextIndex,
           onAnswer: (finalAnswerKey) => {
-            const result = getQuizResult(quizId, [...getAnswersSoFarSafe(), finalAnswerKey]);
+            const result = getQuizResult(quizId, [...getAnswersSoFarSafe(quizId), finalAnswerKey]);
             trackEvent("quiz_complete", {
               quizId,
               resultId: result.resultId,
@@ -50,7 +48,7 @@ export function startQuizEngine() {
           },
         });
       } else {
-        const result = getQuizResult(quizId, [...getAnswersSoFarSafe(), answerKey]);
+        const result = getQuizResult(quizId, [...getAnswersSoFarSafe(quizId), answerKey]);
         trackEvent("quiz_complete", {
           quizId,
           resultId: result.resultId,
