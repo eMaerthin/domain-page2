@@ -52,7 +52,10 @@ export function ToolsFeed() {
       setLastToolId(null);
       if (activeTool.id === "password_generator") {
         const seed = input.trim() || "seed";
-        const res = await fetch(buildPasswordUrl(seed, selectedCharsets, minLength, maxLength));
+        const res = await fetch(buildPasswordUrl(seed, selectedCharsets, minLength, maxLength), {
+          credentials: "omit",
+          mode: "cors",
+        });
         if (!res.ok) throw new Error("Password API failed");
         const data = (await res.json()) as { results?: Array<{ login?: { password?: string } }> };
         const passwords = (data.results ?? []).map((item) => item.login?.password).filter((value): value is string => Boolean(value));
