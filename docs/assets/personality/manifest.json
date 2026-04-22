@@ -1,0 +1,16 @@
+{
+  "query": "weekend people photo",
+  "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/personality/weekend.jpg",
+  "title": "File:Weekend 2015 1.jpg",
+  "pageUrl": "https://commons.wikimedia.org/wiki/File%3AWeekend%202015%201.jpg",
+  "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Weekend_2015_1.jpg",
+  "source": "commons",
+  "work": {
+    "query": "work desk laptop photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/personality/work.jpg",
+    "title": "File:My desk @ Oracle (2052781232).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMy%20desk%20%40%20Oracle%20(2052781232).jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/4/48/My_desk_%40_Oracle_%282052781232%29.jpg",
+    "source": "commons"
+  }
+}
