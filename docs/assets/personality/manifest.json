@@ -100,5 +100,61 @@
     "pageUrl": "https://commons.wikimedia.org/wiki/File%3AS%C3%B6dermalmstorg%20and%20Stockholm%20skyline%20from%20S%C3%B6dermalm.jpg",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/97/S%C3%B6dermalmstorg_and_Stockholm_skyline_from_S%C3%B6dermalm.jpg",
     "source": "commons"
+  },
+  "cozy": {
+    "query": "relaxed cozy room photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/cozy.jpg",
+    "title": "File:Florists' review (microform) (1912) (16675234996).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFlorists'%20review%20(microform)%20(1912)%20(16675234996).jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Florists%27_review_%28microform%29_%281912%29_%2816675234996%29.jpg",
+    "source": "commons"
+  },
+  "social": {
+    "query": "friends laughing sunset photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/social.jpg",
+    "title": "File:The Sunset Tree (2434314045).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThe%20Sunset%20Tree%20(2434314045).jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f7/The_Sunset_Tree_%282434314045%29.jpg",
+    "source": "commons"
+  },
+  "creative": {
+    "query": "creative studio desk photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/creative.jpg",
+    "title": "File:WLA nyhistorical Tiffany Studios Venetian desk lamp.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AWLA%20nyhistorical%20Tiffany%20Studios%20Venetian%20desk%20lamp.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/WLA_nyhistorical_Tiffany_Studios_Venetian_desk_lamp.jpg",
+    "source": "commons"
+  },
+  "urban": {
+    "query": "urban street mood photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/urban.jpg",
+    "title": "File:Dülmen, Marktplatz, Weihnachtsmarkt -- 2013 -- 5362-3.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AD%C3%BClmen%2C%20Marktplatz%2C%20Weihnachtsmarkt%20--%202013%20--%205362-3.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d5/D%C3%BClmen%2C_Marktplatz%2C_Weihnachtsmarkt_--_2013_--_5362-3.jpg",
+    "source": "commons"
+  },
+  "park": {
+    "query": "park greenery mood photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/park.jpg",
+    "title": "File:The hand-book of Mount Desert, coast of Maine, with all the routes thither (IA handbookofmountd01deco).pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AThe%20hand-book%20of%20Mount%20Desert%2C%20coast%20of%20Maine%2C%20with%20all%20the%20routes%20thither%20(IA%20handbookofmountd01deco).pdf",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/48/The_hand-book_of_Mount_Desert%2C_coast_of_Maine%2C_with_all_the_routes_thither_%28IA_handbookofmountd01deco%29.pdf",
+    "source": "commons"
+  },
+  "studio": {
+    "query": "creative studio mood photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/studio.jpg",
+    "title": "File:Still Life 1 19900600.png",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AStill%20Life%201%2019900600.png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/Still_Life_1_19900600.png",
+    "source": "commons"
+  },
+  "reading": {
+    "query": "reading cozy mood photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/mood/reading.jpg",
+    "title": "File:Ford, Schlesinger - March 11, 1975(Gerald Ford Library)(1552985).pdf",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AFord%2C%20Schlesinger%20-%20March%2011%2C%201975(Gerald%20Ford%20Library)(1552985).pdf",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/48/Ford%2C_Schlesinger_-_March_11%2C_1975%28Gerald_Ford_Library%29%281552985%29.pdf",
+    "source": "commons"
   }
 }

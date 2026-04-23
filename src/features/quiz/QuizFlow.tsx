@@ -48,6 +48,20 @@ function RecommendationScreen({ completedQuizIds, onSelectQuiz, onGoToTools }: {
       eyebrow: "Wiedza",
     },
     {
+      quizId: "quiz_mood_match_1",
+      mode: "personality" as const,
+      title: "Do jakiego nastroju pasujesz?",
+      subtitle: "8 pytań, wynik i vibe pasujący do Ciebie.",
+      eyebrow: "Osobowość",
+    },
+    {
+      quizId: "quiz_mood_picture_1",
+      mode: "personality" as const,
+      title: "Jaki masz dzisiaj nastrój?",
+      subtitle: "8 pytań, wynik i vibe pasujący do Ciebie.",
+      eyebrow: "Osobowość",
+    },
+    {
       quizId: "quiz_animal_personality",
       mode: "personality" as const,
       title: "Quiz osobowości: zwierzę",
