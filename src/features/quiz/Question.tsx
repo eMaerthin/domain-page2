@@ -48,7 +48,7 @@ export default function Question<TAnswer extends { id: string; text: string }>({
   return (
     <div className="spk-question">
       <div className="spk-question__hero">
-        {image ? <img src={image} alt="quiz visual" className="spk-question__image" loading="eager" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} /> : null}
+        {image ? <img src={image} alt="quiz visual" className="spk-question__image" loading="eager" decoding="async" onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} /> : null}
         <div className="spk-question__overlay" />
         {prompt ? <div className="spk-question__prompt">{prompt}</div> : null}
         {typeof timeLeft === "number" ? <div className="spk-question__timer">{Math.max(0, Math.ceil(timeLeft / 1000))}</div> : null}

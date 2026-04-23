@@ -173,7 +173,7 @@ export function getQuizResult(quizId: string, answers: string[]): QuizResult {
       percent: 0,
       bucket: "weak",
       tags: ["quiz"],
-      toolRecommendations: ["utility:headlinebank"],
+      toolRecommendations: ["tools"],
     };
   }
 

@@ -22,6 +22,26 @@ export const quizSeed: Quiz[] = [
     },
   },
   {
+    id: "quiz_cities_visual_1",
+    type: "knowledge",
+    title: "Jakie to miasto",
+    tags: ["geografia", "miasta"],
+    data: {
+      questions: [
+        { id: "q1", image: "/assets/3-guess-cities/london.jpg", answers: [{ id: "a", text: "Londyn", correct: true }, { id: "b", text: "Paryż", correct: false }, { id: "c", text: "Berlin", correct: false }] },
+        { id: "q2", image: "/assets/3-guess-cities/paris.jpg", answers: [{ id: "a", text: "Marsylia", correct: false }, { id: "b", text: "Paryż", correct: true }, { id: "c", text: "Lyon", correct: false }] },
+        { id: "q3", image: "/assets/3-guess-cities/berlin.jpg", answers: [{ id: "a", text: "Monachium", correct: false }, { id: "b", text: "Hamburg", correct: false }, { id: "c", text: "Berlin", correct: true }] },
+        { id: "q4", image: "/assets/3-guess-cities/rome.jpg", answers: [{ id: "a", text: "Rzym", correct: true }, { id: "b", text: "Mediolan", correct: false }, { id: "c", text: "Neapol", correct: false }] },
+        { id: "q5", image: "/assets/3-guess-cities/madrid.jpg", answers: [{ id: "a", text: "Madryt", correct: true }, { id: "b", text: "Barcelona", correct: false }, { id: "c", text: "Walencja", correct: false }] },
+        { id: "q6", image: "/assets/3-guess-cities/toronto.jpg", answers: [{ id: "a", text: "Toronto", correct: true }, { id: "b", text: "Montreal", correct: false }, { id: "c", text: "Vancouver", correct: false }] },
+        { id: "q7", image: "/assets/3-guess-cities/washington.jpg", answers: [{ id: "a", text: "Nowy Jork", correct: false }, { id: "b", text: "Los Angeles", correct: false }, { id: "c", text: "Waszyngton", correct: true }] },
+        { id: "q8", image: "/assets/3-guess-cities/saopaulo.jpg", answers: [{ id: "a", text: "Rio de Janeiro", correct: false }, { id: "b", text: "São Paulo", correct: true }, { id: "c", text: "Brasília", correct: false }] },
+        { id: "q9", image: "/assets/3-guess-cities/tokyo.jpg", answers: [{ id: "a", text: "Kioto", correct: false }, { id: "b", text: "Osaka", correct: false }, { id: "c", text: "Tokio", correct: true }] },
+        { id: "q10", image: "/assets/3-guess-cities/stockholm.jpg", answers: [{ id: "a", text: "Malmö", correct: false }, { id: "b", text: "Sztokholm", correct: true }, { id: "c", text: "Göteborg", correct: false }] },
+      ],
+    },
+  },
+  {
     id: "quiz_animal_personality",
     type: "personality",
     title: "Jakim jesteś zwierzęciem?",

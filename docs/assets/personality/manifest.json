@@ -12,5 +12,93 @@
     "pageUrl": "https://commons.wikimedia.org/wiki/File%3AMy%20desk%20%40%20Oracle%20(2052781232).jpg",
     "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/4/48/My_desk_%40_Oracle_%282052781232%29.jpg",
     "source": "commons"
+  },
+  "city": {
+    "query": "city skyline photo",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/personality/city.jpg",
+    "title": "File:Skyline-New-York-City.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASkyline-New-York-City.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/2/22/Skyline-New-York-City.jpg",
+    "source": "commons"
+  },
+  "london": {
+    "query": "London skyline city",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/quiz/london.jpg",
+    "title": "File:City of London skyline from London City Hall - Oct 2008.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACity%20of%20London%20skyline%20from%20London%20City%20Hall%20-%20Oct%202008.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/f/f6/City_of_London_skyline_from_London_City_Hall_-_Oct_2008.jpg",
+    "source": "commons"
+  },
+  "paris": {
+    "query": "Paris cityscape",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/quiz/paris.jpg",
+    "title": "File:Paris Cityscape.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AParis%20Cityscape.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/4/48/Paris_Cityscape.jpg",
+    "source": "commons"
+  },
+  "berlin": {
+    "query": "Berlin city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/quiz/berlin.jpg",
+    "title": "File:Berlin Jun 2012 054 (Olympiastadion).JPG",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ABerlin%20Jun%202012%20054%20(Olympiastadion).JPG",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/7/75/Berlin_Jun_2012_054_%28Olympiastadion%29.JPG",
+    "source": "commons"
+  },
+  "rome": {
+    "query": "Rome city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/quiz/rome.jpg",
+    "title": "File:Alexandria (2007-05-059).jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AAlexandria%20(2007-05-059).jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/2/27/Alexandria_%282007-05-059%29.jpg",
+    "source": "commons"
+  },
+  "madrid": {
+    "query": "Madrid city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/madrid.jpg",
+    "title": "File:Callao in the twilight zone.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ACallao%20in%20the%20twilight%20zone.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/c/c8/Callao_in_the_twilight_zone.jpg",
+    "source": "commons"
+  },
+  "toronto": {
+    "query": "Toronto city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/toronto.jpg",
+    "title": "File:Toronto Skyline at dusk.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AToronto%20Skyline%20at%20dusk.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/a/a1/Toronto_Skyline_at_dusk.jpg",
+    "source": "commons"
+  },
+  "washington": {
+    "query": "Washington city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/washington.jpg",
+    "title": "File:Pittsburgh dawn city pano.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3APittsburgh%20dawn%20city%20pano.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/8/89/Pittsburgh_dawn_city_pano.jpg",
+    "source": "commons"
+  },
+  "saopaulo": {
+    "query": "Sao Paulo city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/saopaulo.jpg",
+    "title": "File:Sao Paulo's Skyline02.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ASao%20Paulo's%20Skyline02.jpg",
+    "imageUrl": "https://upload.wikimedia.org//wikipedia/commons/c/ce/Sao_Paulo%27s_Skyline02.jpg",
+    "source": "commons"
+  },
+  "tokyo": {
+    "query": "Tokyo city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/tokyo.jpg",
+    "title": "File:Tokyo-skyline.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3ATokyo-skyline.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Tokyo-skyline.jpg",
+    "source": "commons"
+  },
+  "stockholm": {
+    "query": "Stockholm city skyline",
+    "file": "/Users/marcinbodych/Workspace/snapik.pl/public/assets/3-guess-cities/stockholm.jpg",
+    "title": "File:Södermalmstorg and Stockholm skyline from Södermalm.jpg",
+    "pageUrl": "https://commons.wikimedia.org/wiki/File%3AS%C3%B6dermalmstorg%20and%20Stockholm%20skyline%20from%20S%C3%B6dermalm.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/97/S%C3%B6dermalmstorg_and_Stockholm_skyline_from_S%C3%B6dermalm.jpg",
+    "source": "commons"
   }
 }

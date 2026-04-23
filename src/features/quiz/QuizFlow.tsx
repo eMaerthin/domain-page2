@@ -41,6 +41,13 @@ function RecommendationScreen({ completedQuizIds, onSelectQuiz, onGoToTools }: {
       eyebrow: "Wiedza",
     },
     {
+      quizId: "quiz_cities_visual_1",
+      mode: "knowledge" as const,
+      title: "Jakie to miasto",
+      subtitle: "10 szybkich pytań ze znanych miast.",
+      eyebrow: "Wiedza",
+    },
+    {
       quizId: "quiz_animal_personality",
       mode: "personality" as const,
       title: "Quiz osobowości: zwierzę",

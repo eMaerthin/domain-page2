@@ -23,7 +23,8 @@ function unsplashKey() {
 function flattenUploadUrl(url: string) {
   const marker = "/wikipedia/commons/";
   const idx = url.indexOf(marker);
-  return idx >= 0 ? `https://upload.wikimedia.org/${url.slice(idx)}` : url;
+  if (idx < 0) return url;
+  return `https://upload.wikimedia.org${url.slice(idx)}`.replace("upload.wikimedia.org//", "upload.wikimedia.org/");
 }
 
 function resolveArgs() {
@@ -101,6 +102,7 @@ async function download(url: string, filePath: string) {
     uploadUrl.replace("https://upload.wikimedia.org/", "https://commons.wikimedia.org/w/index.php?title=Special:Redirect/file/"),
     uploadUrl.replace("https://upload.wikimedia.org/", "https://commons.wikimedia.org/wiki/Special:FilePath/"),
     uploadUrl.replace("https://upload.wikimedia.org/", "https://commons.wikimedia.org/wiki/Special:Redirect/file/"),
+    url,
   ];
 
   let lastError: unknown;
