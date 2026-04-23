@@ -8,6 +8,13 @@ export type ToolDefinition = {
 
 export const toolCatalog: ToolDefinition[] = [
   {
+    id: "village_clicker",
+    category: "Generator",
+    title: "Gra typu click-it w rozwijanie wioski",
+    description: "Klikaj w obrazek, aby rozwijać wioskę przez 7 poziomów.",
+    placeholder: "",
+  },
+  {
     id: "name_generator",
     category: "Generator",
     title: "Generator nicków",
