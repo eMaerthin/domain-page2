@@ -180,6 +180,26 @@ export function ToolsFeed() {
       ) : null}
 
 
+      <div className="spk-tool__grid">
+        {toolCatalog.filter((tool) => tool.id !== activeTool.id).map((tool) => (
+          <button
+            key={tool.id}
+            type="button"
+            onClick={() => {
+              setSelectedToolId(tool.id);
+              setResult([]);
+              setCopied(null);
+              setUsedSeed("");
+              setLastToolId(null);
+            }}
+            className="spk-tool__mini"
+          >
+            <strong>{tool.title}</strong>
+            <span className="spk-tool__category">{tool.category}</span>
+          </button>
+        ))}
+      </div>
+
       <button type="button" className="spk-picker__cta" onClick={backToQuiz}>
         Wróć do quizów
       </button>
