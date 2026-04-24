@@ -181,7 +181,7 @@ export function ToolsFeed() {
 
 
       <div className="spk-tool__grid">
-        {toolCatalog.filter((tool) => tool.id !== activeTool.id).map((tool) => (
+        {toolCatalog.map((tool) => (
           <button
             key={tool.id}
             type="button"
@@ -192,7 +192,7 @@ export function ToolsFeed() {
               setUsedSeed("");
               setLastToolId(null);
             }}
-            className="spk-tool__mini"
+            className={["spk-tool__mini", tool.id === activeTool.id ? "spk-tool__mini--active" : ""].join(" ")}
           >
             <strong>{tool.title}</strong>
             <span className="spk-tool__category">{tool.category}</span>
