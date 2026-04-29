@@ -4,6 +4,16 @@ import { trackEvent } from "../../core/tracking/trackEvent";
 import { getDefaultTool, toolCatalog } from "./toolCatalog";
 import { buildStyledNicknames } from "./nicknameStyles";
 
+const VILLAGE_IMAGES = [
+  "/assets/village/Village_1_xpl6vkxpl6vkxpl6.png",
+  "/assets/village/Village_2_r5y3v5r5y3v5r5y3.png",
+  "/assets/village/Village_3_kvo5gpkvo5gpkvo5.png",
+  "/assets/village/Village_4_puyfohpuyfohpuyf.png",
+  "/assets/village/Village_5_6fjs5c6fjs5c6fjs.png",
+  "/assets/village/Village_6_szffneszffneszff.png",
+  "/assets/village/Village_7_x8uss7x8uss7x8us.png",
+];
+
 const VILLAGE_LEVELS = [0, 10, 35, 135, 385, 1385, 3885] as const;
 const VILLAGE_STATE_KEY = "spk_village_state";
 const VILLAGE_TOTAL_CLICKS_KEY = "spk_village_clicks";
@@ -56,7 +66,6 @@ const PASSWORD_CHARSETS = [
   { id: "number", label: "cyfry" },
 ] as const;
 
-
 function buildPasswordUrl(seed: string, charsets: string[], minLength: number, maxLength: number) {
   const trimmed = seed.trim();
   const range = minLength === maxLength ? `${minLength}` : `${minLength}-${maxLength}`;
@@ -71,6 +80,8 @@ export function ToolsFeed() {
   if (!defaultTool) return null;
   const [selectedToolId, setSelectedToolId] = useState(defaultTool.id);
   const [result, setResult] = useState<string[]>([]);
+  const [nicknameInput, setNicknameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
   const [lastToolId, setLastToolId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -87,16 +98,7 @@ export function ToolsFeed() {
 
   const activeTool = toolCatalog.find((tool) => tool.id === selectedToolId) ?? defaultTool;
   const hasResult = result.length > 0 && lastToolId === activeTool.id;
-  const villageImages = [
-    "/assets/village/Village_1_xpl6vkxpl6vkxpl6.png",
-    "/assets/village/Village_2_r5y3v5r5y3v5r5y3.png",
-    "/assets/village/Village_3_kvo5gpkvo5gpkvo5.png",
-    "/assets/village/Village_4_puyfohpuyfohpuyf.png",
-    "/assets/village/Village_5_6fjs5c6fjs5c6fjs.png",
-    "/assets/village/Village_6_szffneszffneszff.png",
-    "/assets/village/Village_7_x8uss7x8uss7x8us.png",
-  ];
-  const villageImage = villageImages[villageState.stage - 1] ?? villageImages[0];
+  const villageImage = VILLAGE_IMAGES[villageState.stage - 1] ?? VILLAGE_IMAGES[0];
 
   const runTool = async () => {
     setLoading(true);
@@ -113,6 +115,26 @@ export function ToolsFeed() {
         setVillageState(nextState);
         setLastToolId(activeTool.id);
         setResult([]);
+      } else if (activeTool.id === "password_generator") {
+        const seed = passwordInput.trim() || "seed";
+        const res = await fetch(buildPasswordUrl(seed, selectedCharsets, minLength, maxLength), {
+          credentials: "omit",
+          mode: "cors",
+        });
+        if (!res.ok) throw new Error("Password API failed");
+        const data = (await res.json()) as { results?: Array<{ login?: { password?: string } }> };
+        const passwords = (data.results ?? []).map((item) => item.login?.password).filter((value): value is string => Boolean(value));
+        if (!passwords.length) throw new Error("No passwords returned");
+        setUsedSeed(seed);
+        setLastToolId(activeTool.id);
+        setResult(passwords.slice(0, 5));
+      } else {
+        const prefix = nicknameInput.trim();
+        const source = buildStyledNicknames(prefix);
+        if (!source.length) throw new Error("No names returned");
+        setUsedSeed("");
+        setLastToolId(activeTool.id);
+        setResult(source);
       }
       trackEvent("tool_used", {
         toolId: activeTool.id,
@@ -149,6 +171,70 @@ export function ToolsFeed() {
       </div>
 
       <div className="spk-tool__panel spk-card">
+        {activeTool.id === "name_generator" ? (
+          <input
+            value={nicknameInput}
+            onChange={(e) => setNicknameInput(e.target.value)}
+            placeholder={activeTool.placeholder}
+            className="spk-tool__input"
+          />
+        ) : null}
+        {activeTool.id === "password_generator" ? (
+          <input
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+            placeholder={activeTool.placeholder}
+            className="spk-tool__input"
+          />
+        ) : null}
+        {activeTool.id === "password_generator" ? (
+          <button type="button" onClick={runTool} className="spk-tool__cta">
+            {loading ? "Ładowanie..." : "Generuj hasła"}
+          </button>
+        ) : activeTool.id === "name_generator" ? (
+          <button type="button" onClick={runTool} className="spk-tool__cta">
+            {loading ? "Ładowanie..." : "Generuj nicki"}
+          </button>
+        ) : null}
+        {activeTool.id === "password_generator" ? (
+          <div className="spk-tool__options">
+            <div className="spk-tool__option-group">
+              <span className="spk-tool__option-label">Zestawy znaków</span>
+              <div className="spk-tool__chips">
+                {PASSWORD_CHARSETS.map((charset) => {
+                  const checked = selectedCharsets.includes(charset.id);
+                  return (
+                    <label key={charset.id} className={["spk-tool__chip", checked ? "spk-tool__chip--active" : ""].join(" ")}>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => {
+                          setSelectedCharsets((current) =>
+                            current.includes(charset.id) ? current.filter((item) => item !== charset.id) : [...current, charset.id],
+                          );
+                        }}
+                      />
+                      {charset.label}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="spk-tool__option-group">
+              <span className="spk-tool__option-label">Długość</span>
+              <div className="spk-tool__lengths">
+                <label className="spk-tool__field">
+                  <span>Minimalna długość</span>
+                  <input type="number" min={1} value={minLength} onChange={(e) => setMinLength(Number(e.target.value) || 1)} className="spk-tool__input" />
+                </label>
+                <label className="spk-tool__field">
+                  <span>Maksymalna długość</span>
+                  <input type="number" min={1} value={maxLength} onChange={(e) => setMaxLength(Number(e.target.value) || 1)} className="spk-tool__input" />
+                </label>
+              </div>
+            </div>
+          </div>
+        ) : null}
         {error ? <p className="spk-tool__error">{error}</p> : null}
       </div>
 
@@ -191,6 +277,7 @@ export function ToolsFeed() {
               setCopied(null);
               setUsedSeed("");
               setLastToolId(null);
+              setError("");
             }}
             className={["spk-tool__mini", tool.id === activeTool.id ? "spk-tool__mini--active" : ""].join(" ")}
           >
